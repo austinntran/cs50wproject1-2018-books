@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Flights
+  Welcome to Project 1!
 {% endblock %}
 {% block body %}
     <center><h1 class="m-5">Welcome to Austin Tran's Project 1</h1></center>
     <h2 class="mb-3">What is this site?</h2>
     <p>This is Austin Tran's CS50 Project 1!</p>
-    <p><a href="{{ url_for('register') }}">Create an account</a> and <a href="{{ url_for('login') }}">log in</a> to the site in the top right to search for books and their information</p>
+    {% if not loggedIn %}
+      <p><a href="{{ url_for('register') }}">Create an account</a> and <a href="{{ url_for('login') }}">log in</a> to the site in the top right to search for books and their information</p>
+    {% endif %}
     <p>It has been built using HTML5 and Bootstrap 4/CSS for the basic structure with SQL and Python (Flask) on the back-end</p>
 {% endblock %}

@@ -20,10 +20,10 @@
               {% if loggedIn %}
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="">{{ username }}</a>
+                    <a class="nav-link" href="">{{ session["username"] }}</a>
                   </li>
                   <li>
-                    <a class="nav-link" href="">Logout</a>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                   </li>
                 </ul>
               {% else %}
@@ -38,6 +38,19 @@
               {% endif %}
           </div>
       </nav>
+      {% if message %}
+        <center>
+          {% if type == "error" %}
+            <div class="alert alert-danger" role="alert">
+              {{ message }}
+            </div>
+          {% elif type == "success" %}
+            <div class="alert alert-success" role="alert">
+              {{ message }}
+            </div>
+          {% endif %}
+        </center>
+      {% endif %}
       <div class="container text-white">
           {% block body %}
           {% endblock %}
