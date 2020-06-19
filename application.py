@@ -1,4 +1,4 @@
-import os, re
+import os, re, requests
 from flask import Flask, session, render_template, jsonify, request, redirect
 from flask_session import Session
 from sqlalchemy import create_engine
@@ -91,8 +91,25 @@ def register():
 def logout():
     session.clear()
     return redirect("/home")
-@app.route("/search")
+
+
+@app.route("/search", methods=["GET","POST"])
 def search():
     if session.get("user_id") is None:
         return redirect("/login")
-    return render_template("search.html", loggedIn=True)
+    if request.method == "GET":
+        return render_template("search.html", loggedIn=True)
+    elif request.method == "POST":
+        post = request.form.get("item")
+        item = '%' + post.capitalize() + '%'
+        rows = db.execute("SELECT * FROM books WHERE isbn LIKE :item or title LIKE :item or author LIKE :item", {"item": item}).fetchall()
+        # res = requests.get("https://www.goodreads.com/search/index.xml", params={"key": "Z9EerpBcRErsobbjgfc9g", "q": "Betrayal", "search[field]": "all"})
+        # if res.status_code != 200:
+        #     raise Exception("ERROR: API request unsuccessful.")
+        # return res.content# render_template("search.html", loggedIn=True)
+        return render_template("search.html", loggedIn=True, books=rows)
+
+
+@app.route("/book/<title>")
+def book(title):
+    return title

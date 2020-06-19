@@ -4,8 +4,22 @@
   Search for a Book
 {% endblock %}
 {% block body %}
-    <center><h1 class="m-5">Search for a book:</h1></center>
+  <center><h1 class="m-5">Search for a book:</h1></center>
+  <form action="{{ url_for('search') }}" method="post">
     <div class="active-cyan-3 active-cyan-4 mb-4">
-      <input class="form-control" type="text" placeholder="Book title, author, or ISBN" aria-label="Search">
+      <input class="form-control" type="text" placeholder="Book title, author, or ISBN" method="post" action="{{ url_for('search') }}" name="item">
+      <center>
+        <div class="form-group my-4">
+          <button class="btn btn-lg btn-primary btn-block text-uppercase col-sm-4" type="submit">Search</button>
+        </div>
+      </center>
     </div>
+  </form>
+  {% if books %}
+    <div class="d-flex flex-column">
+      {% for book in books %}
+        <div class="p-2 bg-light" style="color: black;"><a href="{{ url_for('book', title=book.title) }}">&#10132;</a>{{ book }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
 {% endblock %}
