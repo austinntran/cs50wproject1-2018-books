@@ -101,15 +101,28 @@ def search():
         return render_template("search.html", loggedIn=True)
     elif request.method == "POST":
         post = request.form.get("item")
-        item = '%' + post.capitalize() + '%'
-        rows = db.execute("SELECT * FROM books WHERE isbn LIKE :item or title LIKE :item or author LIKE :item", {"item": item}).fetchall()
+        if post is "":
+            return render_template("search.html", loggedIn=True, type="error", message="No terms were entered in search")
+        item = '%' + post.upper() + '%'
+        rows = db.execute("SELECT * FROM books WHERE UPPER(isbn) LIKE :item or UPPER(title) LIKE :item or UPPER(author) LIKE :item", {"item": item}).fetchall()
         # res = requests.get("https://www.goodreads.com/search/index.xml", params={"key": "Z9EerpBcRErsobbjgfc9g", "q": "Betrayal", "search[field]": "all"})
         # if res.status_code != 200:
         #     raise Exception("ERROR: API request unsuccessful.")
         # return res.content# render_template("search.html", loggedIn=True)
-        return render_template("search.html", loggedIn=True, books=rows)
+
+        return render_template("search.html", loggedIn=True, books=rows, search=post)
 
 
 @app.route("/book/<title>")
 def book(title):
-    return title
+    if session.get("user_id") is None:
+        return redirect("/login")
+    book = db.execute("SELECT * FROM books WHERE UPPER(title) = :title", {"title": title.upper()}).fetchone()
+    # use goodreads API
+    if book is None:
+        return redirect("/search")
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "Z9EerpBcRErsobbjgfc9g", "isbns": book.isbn})
+    res2 = requests.get("https://www.goodreads.com/search/index.xml", params={"key": "Z9EerpBcRErsobbjgfc9g", "q": book.isbn, "search[field]": "all"})
+    data = res.json()
+    data2 = res2.content
+    return render_template("book.html", loggedIn=True, title=title, data=data["books"][0], book=book)

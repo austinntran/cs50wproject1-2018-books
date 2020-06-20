@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+{% block body %}
+  <center><h1 class="m-5">{{ title }}</h1></center>
+  <div class="row align-items-center">
+    <div class="col-sm-6 mb-3 mt-3" style="color: black;">
+      <div class="card bg-light rounded p-3">
+        <div class="row">
+          <div class="col-sm-12 m-3">
+            <center>
+              <h3>Basic Information</h3>
+            </center>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <p>Title: </p>
+          </div>
+          <div class="col-sm-6 float-right">
+            <p class="float-right">{{ book.title }}</p>
+          </div>
+        </div>
+        <div class="row border">
+          <div class="col-sm-6">
+            <p>Author: </p>
+          </div>
+          <div class="col-sm-6 float-right">
+            <p class="float-right">{{ book.author }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <p>ISBN: </p>
+          </div>
+          <div class="col-sm-6">
+            <p class="float-right">{{ book.isbn }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 mb-3 mt-3" style="color: black;">
+      <center>
+        <img src="http://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg" class="rounded card" style="width: 50%;" />
+      </center>
+    </div>
+    <div class="col-sm-12 mb-3 mt-3" style="color: black;">
+      <div class="card bg-light rounded p-3">
+        <div class="row">
+          <div class="col-sm-12 m-3">
+            <center>
+              <h3>Reviews and Ratings</h3>
+              <p>Showing {{ reviews|length }} reviews for &#34;<i>{{ book.title }}</i>&#34;</p>
+            </center>
+          </div>
+
+          <div class="col-sm-6">
+            <p>Title: </p>
+          </div>
+          <div class="col-sm-6 float-right">
+            <p class="float-right">{{ book.title }}</p>
+          </div>
+          <div class="col-sm-6">
+            <p>Author: </p>
+          </div>
+          <div class="col-sm-6 float-right">
+            <p class="float-right">{{ book.author }}</p>
+          </div>
+          <hr color="000000">
+          <div class="col-sm-6">
+            <p>ISBN: </p>
+          </div>
+          <div class="col-sm-6">
+            <p class="float-right">{{ book.isbn }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+
+  </div>
+{% endblock %}

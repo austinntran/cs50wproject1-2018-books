@@ -5,30 +5,29 @@
 {% block body %}
   <center><h1 class="mt-5 mb-4">Login Below</h1></center>
   <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-signin my-5">
-          <div class="card-body">
-            <h5 class="card-title text-center" style="color: black;">Sign In</h5>
-            <form class="form-signin" method="post">
-              <div class="form-label-group mb-4">
-                <label style="color: black;">Username</label>
-                <input type="text" class="form-control" placeholder="Username" name="user" required autofocus>
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center" style="color: black;">Sign In</h5>
+          <form class="form-signin" method="post">
+            <div class="form-label-group mb-4">
+              <label style="color: black;">Username</label>
+              <input type="text" class="form-control" placeholder="Username" name="user" required autofocus>
+            </div>
+            <div class="form-label-group mb-4">
+              <label style="color: black;">Password</label>
+              <input type="password" class="form-control" placeholder="Password" name="password" required>
+            </div>
+            <center>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase mt-4 mb-4 col-sm-4" type="submit">Sign in</button>
+              <hr class="my-4" color="000000">
+              <div class="container signin">
+                <p style="color: black;">Don't have an account? <a href="{{ url_for('register') }}">Create an account</a>.</p>
               </div>
-
-              <div class="form-label-group mb-4">
-                <label style="color: black;">Password</label>
-                <input type="password" class="form-control" placeholder="Password" name="password" required>
-              </div>
-              <center>
-                <button class="btn btn-lg btn-primary btn-block text-uppercase mt-4 mb-4 col-sm-4" type="submit">Sign in</button>
-                <hr class="my-4" color="000000">
-                <div class="container signin">
-                  <p style="color: black;">Don't have an account? <a href="{{ url_for('register') }}">Create an account</a>.</p>
-                </div>
-              </center>
-            </form>
-          </div>
+            </center>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 {% endblock %}
