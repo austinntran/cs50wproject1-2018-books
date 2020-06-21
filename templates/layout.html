@@ -7,53 +7,88 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="../static/styles.css">
     </head>
     <body class="bg-dark">
-      <nav class="navbar navbar-expand-lg  navbar-dark bg-secondary">
-        <a class="navbar-brand" href="{{ url_for('index') }}">Project 1: Books</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              {% if loggedIn %}
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item">
-                    <a class="nav-link" href="">{{ session["username"] }}</a>
-                  </li>
-                  <li>
-                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-                  </li>
-                </ul>
-              {% else %}
-                <ul class="navbar-nav ml-auto">
-                  <li>
-                    <a class="nav-link" href="{{ url_for('register') }}">Register</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                  </li>
-                </ul>
+      <div id="page-container">
+        <div id="content-wrap">
+          <nav class="navbar navbar-expand-lg  navbar-dark bg-secondary">
+            <a class="navbar-brand" href="{{ url_for('index') }}">Project 1: Books</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  {% if loggedIn %}
+                    <ul class="navbar-nav ml-auto">
+                      <li class="nav-item">
+                        <a class="nav-link" href="">{{ session["username"] }}</a>
+                      </li>
+                      <li>
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                      </li>
+                    </ul>
+                  {% else %}
+                    <ul class="navbar-nav ml-auto">
+                      <li>
+                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                      </li>
+                    </ul>
+                  {% endif %}
+              </div>
+          </nav>
+          {% if message %}
+            <center>
+              {% if type == "error" %}
+                <div class="alert alert-danger" role="alert">
+                  {{ message }}
+                </div>
+              {% elif type == "success" %}
+                <div class="alert alert-success" role="alert">
+                  {{ message }}
+                </div>
               {% endif %}
-          </div>
-      </nav>
-      {% if message %}
-        <center>
-          {% if type == "error" %}
-            <div class="alert alert-danger" role="alert">
-              {{ message }}
-            </div>
-          {% elif type == "success" %}
-            <div class="alert alert-success" role="alert">
-              {{ message }}
-            </div>
+            </center>
           {% endif %}
-        </center>
-      {% endif %}
-      <div class="container text-white">
-          {% block body %}
-          {% endblock %}
+          <div class="container text-white">
+              {% block body %}
+              {% endblock %}
+          </div>
+
+        </div>
+          <footer class="page-footer font-small blue-grey lighten-5" id="footer">
+            <div style="background-color: orange;">
+              <div class="container">
+                <div class="row py-4 d-flex align-items-center">
+                  <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                    <h6 class="mb-0">Check out my profiles on some other platforms!</h6>
+                  </div>
+                  <div class="col-md-6 col-lg-7 text-center text-md-right">
+                    <a class="social-icon" alt="GitHub" href="https://github.com/austinntran" target="_blank">
+                      <i class="fa fa-github" aria-hidden="true"></i>
+                    </a>
+                    <a class="social-icon" alt="LinkedIn" href="https://www.linkedin.com/in/austinntran" target="_blank">
+                      <i class="fa fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                    <a class="social-icon" alt="Twitter" href="https://twitter.com/autintron" target="_blank">
+                      <i class="fa fa-twitter"></i>
+                    </a>
+                    <a class="social-icon"  alt="YouTube" href="https://www.youtube.com/channel/UCJrwJE-9qaaGldq3IFrwfug" target="_blank">
+                      <i class="fa fa-youtube" aria-hidden="true"></i>
+                    </a>
+                    <a class="social-icon" alt="YouTube" href="https://instagram.com/austinfitsintheoverheadbin" target="_blank">
+                      <i class="fa fa-instagram" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </footer>
       </div>
     </body>
 </html>

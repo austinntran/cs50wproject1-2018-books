@@ -16,4 +16,46 @@ a:active {
 .border {
   border: 20px solid #dee2e6; }
 
+body {
+  display: flex;
+  flex-direction: column; }
+
+#page-container {
+  position: relative;
+  min-height: 93vh; }
+
+#content-wrap {
+  padding-bottom: 2.5rem;
+  /* Footer height */ }
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  /* Footer height */ }
+
+.social-icon .fa {
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 10px;
+  border-radius: 50%; }
+.social-icon .fa-github {
+  background: grey;
+  color: white; }
+.social-icon .fa-youtube {
+  background: #bb0000;
+  color: white; }
+.social-icon .fa-twitter {
+  background: #55ACEE;
+  color: white; }
+.social-icon .fa-linkedin {
+  background: #007bb5;
+  color: white; }
+.social-icon .fa-instagram {
+  background: #125688;
+  color: white; }
+
 /*# sourceMappingURL=styles.css.map */
