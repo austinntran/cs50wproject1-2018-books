@@ -109,7 +109,7 @@ def search():
         # if res.status_code != 200:
         #     raise Exception("ERROR: API request unsuccessful.")
         # return res.content# render_template("search.html", loggedIn=True)
-        if rows == 0:
+        if len(rows) == 0:
             return render_template("search.html", loggedIn=True, type="error", message="No results were found")
         return render_template("search.html", loggedIn=True, books=rows, search=post)
 
