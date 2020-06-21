@@ -56,7 +56,7 @@
           </div>
           <div class="col-sm-12">
             <center>
-            <p >Average Rating: <b>{{ data['average_rating'] }}</b> / 5.0</p>
+            <p >Average Rating (Goodreads): <b>{{ data['average_rating'] }}</b> / 5.0</p>
             </center>
           </div>
         </div>
@@ -111,25 +111,6 @@
                 <td>{{ review.text }}</td>
                 <td>{{ review.rating}}</td>
               </tr>
-              <div class="col-sm-6">
-                <p>Title: </p>
-              </div>
-              <div class="col-sm-6 float-right">
-                <p class="float-right">{{ book.title }}</p>
-              </div>
-              <div class="col-sm-6">
-                <p>Author: </p>
-              </div>
-              <div class="col-sm-6 float-right">
-                <p class="float-right">{{ book.author }}</p>
-              </div>
-              <hr color="000000">
-              <div class="col-sm-6">
-                <p>ISBN: </p>
-              </div>
-              <div class="col-sm-6">
-                <p class="float-right">{{ book.isbn }}</p>
-              </div>
             {% endfor %}
           </table>
         </div>

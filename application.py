@@ -129,11 +129,32 @@ def book(title):
         #db.execute("SELECT * FROM users WHERE username = :user", {"user": user}).fetchone()
         return  render_template("book.html", loggedIn=True, data=data["books"][0], book=book, reviews=reviews)
     elif request.method == "POST":
-        preexist = db.execute("SELECT * FROM reviews WHERE user_id = :user_id and book_id = :isbn", {"user_id": session["user_id"], "isbn": book.isbn})
-        if preexist:
+        preexist = db.execute("SELECT * FROM reviews WHERE user_id = :user_id AND book_id = :isbn", {"user_id": session["user_id"], "isbn": book.isbn}).fetchall()
+        if not(preexist is None):
             return render_template("book.html", loggedIn=True, data=data["books"][0], book=book, type="error", message="You have already created review for this book", reviews=reviews)
-        text = request.form.get("text")
-        rating = request.form.get("rating")
-        db.execute("INSERT INTO reviews (user_id, book_id, text, rating) VALUES (:user_id, :book_id, :text, :rating)", {"user_id": session["user_id"], "book_id": book.isbn, "text": text, "rating": rating})
-        db.commit()
-        return  render_template("book.html", loggedIn=True, data=data["books"][0], book=book, type="success", message="Review sucessfully posted", reviews=reviews)
+        else:
+            text = request.form.get("text")
+            rating = request.form.get("rating")
+            db.execute("INSERT INTO reviews (user_id, book_id, text, rating) VALUES (:user_id, :book_id, :text, :rating)", {"user_id": session["user_id"], "book_id": book.isbn, "text": text, "rating": rating})
+            db.commit()
+            reviews = db.execute("SELECT username, text, rating FROM reviews JOIN users ON reviews.user_id = users.id WHERE book_id = :isbn", {"isbn": book.isbn}).fetchall()
+            return  render_template("book.html", loggedIn=True, data=data["books"][0], book=book, type="success", message="Review sucessfully posted", reviews=reviews)
+@app.route("/api/<isbn>")
+def api(isbn):
+    book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+    if book is None:
+        return jsonify({"error": "ISBN not found"}), 404
+    review_count = db.execute("SELECT COUNT(id) FROM reviews WHERE book_id = :isbn", {"isbn": isbn}).fetchall()
+    ratings = db.execute("SELECT rating FROM reviews WHERE book_id = :isbn", {"isbn": isbn}).fetchall()
+    average = 0
+    for rating in ratings:
+        average += rating[0]
+    average /= float(len(ratings))
+    return jsonify({
+            "title": book.title,
+            "author": book.author,
+            "year": book.year,
+            "isbn": isbn,
+            "review_count": review_count[0][0],
+            "average_score": average
+         })
