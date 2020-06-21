@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
 {% block title %}
-  {{ title }}
+  {{ book.title }}
 {% endblock %}
 {% block body %}
-  <center><h1 class="m-5">{{ title }}</h1></center>
+  <center><h1 class="m-5">{{ book.title }}</h1></center>
   <div class="row align-items-center">
     <div class="col-sm-6 mb-3 mt-3" style="color: black;">
       <div class="card bg-light rounded p-3">
@@ -15,66 +15,123 @@
             </center>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <p>Title: </p>
-          </div>
-          <div class="col-sm-6 float-right">
-            <p class="float-right">{{ book.title }}</p>
-          </div>
-        </div>
-        <div class="row border">
-          <div class="col-sm-6">
-            <p>Author: </p>
-          </div>
-          <div class="col-sm-6 float-right">
-            <p class="float-right">{{ book.author }}</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <p>ISBN: </p>
-          </div>
-          <div class="col-sm-6">
-            <p class="float-right">{{ book.isbn }}</p>
-          </div>
-        </div>
+
+        <table class="table">
+          <tr>
+            <td>Title: </td>
+            <td class="text-right">{{ book.title }}</td>
+          </tr>
+          <tr>
+            <td>Author: </td>
+            <td class="text-right">{{ book.author }}</td>
+          </tr>
+          <tr>
+            <td>ISBN: </td>
+            <td class="text-right">{{ book.isbn }}</td>
+          </tr>
+        </table>
       </div>
     </div>
     <div class="col-sm-6 mb-3 mt-3" style="color: black;">
       <center>
-        <img src="http://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg" class="rounded card" style="width: 50%;" />
+        <img src="http://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg" class="rounded card" style="height: 100%;" />
       </center>
     </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-sm-6 mb-3 mt-3" style="color: black;">
+      <div class="card bg-light rounded">
+        <div class="row m-3">
+          <div class="col-sm-12">
+            <center>
+              <h3>Ratings</h3>
+            </center>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <center>
+              <p>From {{ data["work_ratings_count"] }} ratings...</p>
+            </center>
+          </div>
+          <div class="col-sm-12">
+            <center>
+            <p >Average Rating: <b>{{ data['average_rating'] }}</b> / 5.0</p>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-sm-12 mb-3 mt-3" style="color: black;">
       <div class="card bg-light rounded p-3">
         <div class="row">
           <div class="col-sm-12 m-3">
             <center>
-              <h3>Reviews and Ratings</h3>
-              <p>Showing {{ reviews|length }} reviews for &#34;<i>{{ book.title }}</i>&#34;</p>
+              <h3>Reviews</h3>
             </center>
           </div>
 
-          <div class="col-sm-6">
-            <p>Title: </p>
+          <div class="col-sm-12 m-3">
+            <center>
+              <h5>Leave a Review:</h5>
+              <form method="post">
+                <label class="m-2">Rating:</label>
+                <div class="d-flex justify-content-center my-4">
+                  <span class="font-weight-bold indigo-text mr-2 mt-1">1</span>
+                  <div class="range-field w-25">
+                    <input class="border-0 w-75" type="range" min="1" max="5" name="rating"/>
+                  </div>
+                  <span class="font-weight-bold indigo-text ml-2 mt-1">5</span>
+                </div>
+                <div class="form-group w-50">
+                  <label>Comments:</label>
+                  <textarea class="form-control" rows="3" name="text"></textarea>
+                </div>
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase mt-4 mb-4 col-sm-4" type="submit">Submit Review</button>
+              </form>
+            </center>
           </div>
-          <div class="col-sm-6 float-right">
-            <p class="float-right">{{ book.title }}</p>
+
+          <div class="col-sm-12 m-3">
+            <center>
+              <p>Showing {{ reviews|length }} reviews for &#34;<i>{{ book.title }}</i>&#34;</p>
+            </center>
           </div>
-          <div class="col-sm-6">
-            <p>Author: </p>
-          </div>
-          <div class="col-sm-6 float-right">
-            <p class="float-right">{{ book.author }}</p>
-          </div>
-          <hr color="000000">
-          <div class="col-sm-6">
-            <p>ISBN: </p>
-          </div>
-          <div class="col-sm-6">
-            <p class="float-right">{{ book.isbn }}</p>
-          </div>
+          <table class="table">
+            <thead>
+              <th scope="col">Username</th>
+              <th scope="col">Comment</th>
+              <th scope="col">Rating</th>
+            </thead>
+            {% for review in reviews %}
+              <tr>
+                <td>{{ review.username }}</td>
+                <td>{{ review.text }}</td>
+                <td>{{ review.rating}}</td>
+              </tr>
+              <div class="col-sm-6">
+                <p>Title: </p>
+              </div>
+              <div class="col-sm-6 float-right">
+                <p class="float-right">{{ book.title }}</p>
+              </div>
+              <div class="col-sm-6">
+                <p>Author: </p>
+              </div>
+              <div class="col-sm-6 float-right">
+                <p class="float-right">{{ book.author }}</p>
+              </div>
+              <hr color="000000">
+              <div class="col-sm-6">
+                <p>ISBN: </p>
+              </div>
+              <div class="col-sm-6">
+                <p class="float-right">{{ book.isbn }}</p>
+              </div>
+            {% endfor %}
+          </table>
         </div>
       </div>
     </div>
