@@ -7,7 +7,7 @@ I completed the project by creating a website using Flask/Python, Jinja, and Her
 # What's in Each File
 
 1. static:
-  - contains styles.scss and styles.css which hold the CSS and SASS code for the styling of the webpages
+   - contains styles.scss and styles.css which hold the CSS and SASS code for the styling of the webpages
 
 2. templates:
    - book.html: contains page that displays information on a specific book
