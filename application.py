@@ -82,7 +82,7 @@ def register():
             password_hash = generate_password_hash(password)
             db.execute("INSERT INTO users (username, password_hash) VALUES (:username, :password_hash)", {"username": user, "password_hash": password_hash})
             db.commit()
-            return render_template("login.html", type="success", message="Account was successfully created!")
+            return redirect('login')
         else:
             return render_template("register.html", type="error", message="Username or password you have entered is invalid or taken. Both should have no spaces, and passwords should be over 8 characters long.")
 
@@ -109,7 +109,7 @@ def search():
         # if res.status_code != 200:
         #     raise Exception("ERROR: API request unsuccessful.")
         # return res.content# render_template("search.html", loggedIn=True)
-        if len(rows) == 0: 
+        if len(rows) == 0:
             return render_template("search.html", loggedIn=True, type="error", message="No results were found")
         return render_template("search.html", loggedIn=True, books=rows, search=post)
 
