@@ -4,6 +4,10 @@ Web Programming with Python and JavaScript
 
 I completed the project by creating a website using Flask/Python, Jinja, and Heroku Database/SQL commands.
 
+# Test it out:
+
+http://austinntrancs50wproject1.herokuapp.com/
+
 # What's in Each File
 
 1. static:
