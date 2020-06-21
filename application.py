@@ -131,7 +131,7 @@ def book(title):
         return  render_template("book.html", loggedIn=True, data=data["books"][0], book=book, reviews=reviews)
     elif request.method == "POST":
         preexist = db.execute("SELECT * FROM reviews WHERE user_id = :user_id AND book_id = :isbn", {"user_id": session["user_id"], "isbn": book.isbn}).fetchall()
-        if not(preexist is None):
+        if not(preexist == []):
             return render_template("book.html", loggedIn=True, data=data["books"][0], book=book, type="error", message="You have already created review for this book", reviews=reviews)
         else:
             text = request.form.get("text")
